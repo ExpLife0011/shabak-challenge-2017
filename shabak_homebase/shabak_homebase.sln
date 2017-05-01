@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shabak_homebase_1", "shabak_homebase_1\shabak_homebase_1.vcxproj", "{C24E08F8-9069-4523-BAA5-E576387CB8FA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shabak_homebase_2", "shabak_homebase_2\shabak_homebase_2.vcxproj", "{C2CACE75-A0B7-46DA-AEF8-BED88DA1A2C6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shabak_homebase_3", "shabak_homebase_3\shabak_homebase_3.vcxproj", "{EFA42207-4163-46C7-8B24-302D5D1424E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C24E08F8-9069-4523-BAA5-E576387CB8FA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C24E08F8-9069-4523-BAA5-E576387CB8FA}.Debug|Win32.Build.0 = Debug|Win32
+		{C24E08F8-9069-4523-BAA5-E576387CB8FA}.Release|Win32.ActiveCfg = Release|Win32
+		{C24E08F8-9069-4523-BAA5-E576387CB8FA}.Release|Win32.Build.0 = Release|Win32
+		{C2CACE75-A0B7-46DA-AEF8-BED88DA1A2C6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C2CACE75-A0B7-46DA-AEF8-BED88DA1A2C6}.Debug|Win32.Build.0 = Debug|Win32
+		{C2CACE75-A0B7-46DA-AEF8-BED88DA1A2C6}.Release|Win32.ActiveCfg = Release|Win32
+		{C2CACE75-A0B7-46DA-AEF8-BED88DA1A2C6}.Release|Win32.Build.0 = Release|Win32
+		{EFA42207-4163-46C7-8B24-302D5D1424E5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EFA42207-4163-46C7-8B24-302D5D1424E5}.Debug|Win32.Build.0 = Debug|Win32
+		{EFA42207-4163-46C7-8B24-302D5D1424E5}.Release|Win32.ActiveCfg = Release|Win32
+		{EFA42207-4163-46C7-8B24-302D5D1424E5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
