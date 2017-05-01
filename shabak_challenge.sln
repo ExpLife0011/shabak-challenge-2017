@@ -11,8 +11,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shabak_homebase_3", "shabak
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shabak_cyber_1", "shabak_cyber\shabak_cyber_1\shabak_cyber_1.vcxproj", "{2A3432EA-66D1-4E69-AA60-02942141D63E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shabak_airplane", "shabak_airplane\shabak_airplane.vcxproj", "{50DFBE2D-588B-42D1-B59E-BE981A447E72}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -35,10 +33,6 @@ Global
 		{2A3432EA-66D1-4E69-AA60-02942141D63E}.Debug|Win32.Build.0 = Debug|Win32
 		{2A3432EA-66D1-4E69-AA60-02942141D63E}.Release|Win32.ActiveCfg = Release|Win32
 		{2A3432EA-66D1-4E69-AA60-02942141D63E}.Release|Win32.Build.0 = Release|Win32
-		{50DFBE2D-588B-42D1-B59E-BE981A447E72}.Debug|Win32.ActiveCfg = Debug|Win32
-		{50DFBE2D-588B-42D1-B59E-BE981A447E72}.Debug|Win32.Build.0 = Debug|Win32
-		{50DFBE2D-588B-42D1-B59E-BE981A447E72}.Release|Win32.ActiveCfg = Release|Win32
-		{50DFBE2D-588B-42D1-B59E-BE981A447E72}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
