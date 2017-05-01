@@ -1,0 +1,58 @@
+HINT: Same as before, this executable has a password that you need to extract, but unlike the last time, you will face against a simple Anti debugging Technique and many more fun stuff
+
+Second.exe:
+#######################################################################################################################
+Compared to the first challenge, this challenge is _far_ more advanced, but still doable, none-the-less.
+
+This challenge uses initialization-functions (probably TLS-callbacks) that are called before the main-function inside the entry-point.
+
+The function-table located at Second.exe+0x24124, which is managed in Second.exe+0x16BE7, which is called in the entry point, contains 3 functions:
+	-> 1 : Second.exe+0x13A40 - Initializes some unhandled-exception-handler and does some other logic (I didn't bother checking).
+	-> 2 : Second.exe+0x11F0 	- Mutates the decryption-function (more on this later).
+	-> 3 : Second.exe+0x138D0 - Initializes the anti-debug thread (a thread with a loop that constantly checks the time since last execution, in order to check if the process was paused by a breakpoint).
+		-> Change this to "mov eax,00000001 -> ret", in order to bypass the anti-debug checks.
+
+After these pre-initialization functions, the main-function (Second.exe+0x10A0) is called. Inside the main-function, you are asked for a password. 
+This password is then mutated through an algorithm in function Second.exe+0x1150, in order to generate a key, which is then passed to the decryption-function (Second.exe+0x1160).
+
+However, when using a static analysis approach on the decryption-function, you'll see the original data, but that is not what is being executed.
+The function is being mutated in the pre-initialization scheme, to an entirely different function, which decrypts a buffer of size 0x12600 with a simple xor-decryption (using a static xor-key).
+
+After decrypting the buffer, a function (passed to the decryption-function as argument) is called, which does the following:
+	-> 1 : Creates a file called "GettingSchwifty.bat".
+	-> 2 : Writes the decrypted buffer to the file.
+	-> 3 : Loads the file as a dynamic link library (.dll) into the current process.
+	-> 4 : Retrieves the address of an exported function in the .dll.
+	-> 5 : Executes the exported function.
+
+If you did not specify the correct password, when prompted, your decryption-key will be wrong, and the decrypted buffer will not be a runnable executable.
+Our mission is now to figure out the password, so we can generate the correct key, and thus decrypt the file-data properly, which will result in generating the correct file.
+
+I was too lazy to actually recreate the decryption-algorithm, etc., so I went with a very different approach:
+	-> 1 : First I looked at the first entry in the xor-key (Second.exe+0x1220), which was 0xE80285B5.
+	-> 2 : Now, since the GettingSchwifty.bat file is being loaded through LoadLibrary, we can assume it's a DLL-file. DLL-files (like EXE-files) are "Portable Executables" (PEs). 
+		-> A Windows PE file always starts with a DOS-header. Inside the DOS-header, there's the "magic" number ('MZ'), followed by other data.
+		-> In most files, the first 4 bytes will almost exclusively be [ 'M' (0x4D), 'Z' (0x5A), 0x90, 0x00 ] -> 0x00905A4D.
+	-> 3 : Knowing we're using a xor-algorithm, I knew that the first entry in the xor-key xor'ed with the proper decryption-key, would give 0x00905A4D for the first entry.
+		-> When using xor, you can use the key reversely aswell, and that's what I did. If (XXXXXXXX ^ 0xE80285B5 = 0x00905A4D), then (0xE80285B5 ^ 0x00905A4D = XXXXXXXX).
+		-> 0xE80285B5 ^ 0x00905A4D = 0xE892DFF8.
+		
+Changing the decryption-key to this key, the GettingSchwifty.bat file was generated correctly, and was identified as a dynamic link library (DLL) file.		
+#######################################################################################################################
+
+GettingSchwifty.bat:
+#######################################################################################################################
+Looking at the exported function, which is called by Second.exe, we notice that the DLL-file does the following:
+	-> 1 : Creates a named pipe ("\\\\.\\pipe\\flumbus_channel").
+	-> 2 : Writes a question to the pipe ("What is cooler than being cool?").
+	-> 3 : Reads the answer from the pipe (null).
+	-> 4 : Decrypts the answer into the password-verification that we need to pass this challenge.
+	
+If the answer is incorrect, which it is, since the pipe doesn't exist, GettingSchwifty.bat prints a hint: "Oh Man, you need to work on work music skillz, Wubba Lubba Dub Dub!!!".
+
+Now, I don't know if any of you are familiar with the band Outlandish, but they once made a song, in which they say: "Now what's cooler than being cool? Ice cold!".
+That, plus the fact that they print "... you need to work on work music skillz ...", it's pretty clear to assume that the answer they're looking for is "Ice cold!".
+
+Writing "Ice cold!" to the answer-buffer, the password we needed for the challenge was succesfully printed:
+>> You_Pass_The_Butter
+#######################################################################################################################
